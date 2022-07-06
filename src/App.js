@@ -1,4 +1,3 @@
-// import React from "react";
 import {
 	BrowserRouter,
 	Routes,
@@ -17,9 +16,6 @@ import { WalletProvider } from "./store";
 
 
 function App() {
-
-
-
 
 	return (
 		<div className="App">

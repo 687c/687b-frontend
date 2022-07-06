@@ -22,7 +22,7 @@ function walletReducer(state, action) {
         }
         default: {
             // throw new Error(`Unhandled action type ${action.type}`)
-            return { initialState }
+            return { ...initialState }
         }
     }
 }
