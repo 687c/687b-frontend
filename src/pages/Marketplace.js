@@ -1,22 +1,95 @@
+import { sendAndConfirmTransaction, Keypair, Connection, clusterApiUrl, Transaction } from "@solana/web3.js";
+import { useEffect, useMemo, useState } from "react";
 import styled from "styled-components"
-import ProductCard from "../components/Product";
 
-export default function Marketplace() {
+import { getAllProducts, testProductFail } from "../services/productService";
+import { buyProduct } from "../services/transactionService";
 
-    //generating empty objects
-    const products = new Array(5).fill("");
-    console.log(products);
+import ProductCard from "../components/ProductCard";
 
-    const Wrapper = styled.div`
+const Wrapper = styled.div`
         /* display: flex; */
     `;
 
-    const ProductsWrapper = styled.section`
+const ProductsWrapper = styled.section`
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
     `
 
+
+export default function Marketplace() {
+    const [products, setProducts] = useState();
+    const [isLoading, setIsLoading] = useState(true);
+
+
+    const orderId = useMemo(() => Keypair.generate().publicKey, []);
+
+    useEffect(() => {
+        // testProductFail().then(res => {
+        //     if (res.error) {
+        //         return;
+        //     }
+        //     console.log("the res", res);
+        // });
+
+
+        getAllProducts().then(res => {
+            if (res.error) {
+                alert("error fetching all products -> ", res.data);
+                return;
+            }
+
+            console.log("this is the res", res);
+            setProducts(res.data);
+
+            //check for an error and use it to change the loading state
+            setIsLoading(false);
+        });
+
+    }, []);
+
+
+    //function to handle buying of the product.
+    //maybe it should be on its own
+    const handleBuy = async (id) => {
+        let product = products.find(prod => prod.id === id);
+        console.log("this is the product found", product);
+
+        const publicKey = "EX18BadxPGLjZjpCc6r38VPPYR4yd1764J915Q1WSVwE".toString(); //GET THIS FROM THE GLOBAL STORE
+
+        let connection = new Connection(clusterApiUrl('devnet'));
+
+        try {
+            const resp = await buyProduct(id, publicKey, orderId.toString());
+            if (resp.error) {
+                alert("error buying the product");
+                return;
+            }
+
+            const transaction = Transaction.from(Buffer.from(resp.data.transaction, "base64"));
+            console.log("tx data is -> ", transaction);
+
+            const provider = window.solana;
+            const { signature } = await provider.signAndSendTransaction(transaction);
+            await connection.getSignatureStatus(signature);
+
+            // const txPair = Keypair.generate();
+            // const signature = await sendAndConfirmTransaction(connection, transaction, [txPair]);
+            // console.log("this is the signature resp", signature);
+        } catch (err) {
+            console.error('error sending the transaction', err);
+        }
+    }
+
+
+
+    //generating empty Products
+    const prods = new Array(5).fill("");
+
+    if (isLoading) {
+        return <>Loading....</>
+    }
 
     return (
         <Wrapper>
@@ -26,8 +99,10 @@ export default function Marketplace() {
             </div>
             <ProductsWrapper>
                 {
-                    products.map(() => (
-                        <ProductCard />
+                    products.map(prod => (
+                        <ProductCard
+                            handleBuy={() => handleBuy(prod.id)}
+                        />
                     ))
                 }
             </ProductsWrapper>
