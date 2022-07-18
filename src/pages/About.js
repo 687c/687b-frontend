@@ -1,13 +1,13 @@
 
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 
 import { ConnectionBtn } from "../components/ConnectionBtn";
-
 import { useWalletValues } from "../store";
+import styled from "styled-components";
 
 export default function About() {
 
-    const values = useWalletValues()
+    const values = useWalletValues();
 
     useEffect(() => {
         console.log("the values", values);
@@ -18,6 +18,7 @@ export default function About() {
             <p>You are in the about page</p>
             {/* <button onClick={connectWallet}>connect wallet</button> */}
             <ConnectionBtn />
+
         </div>
     )
 }
