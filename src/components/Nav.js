@@ -32,6 +32,8 @@ export default function NavBar() {
                 color: grey;
                 cursor: pointer;
                 text-decoration: underline;
+                text-decoration-thickness: 3px;
+                text-underline-offset: 4px;
             }
         }
     `;
@@ -56,6 +58,8 @@ export default function NavBar() {
             &:hover{
                 cursor: pointer;
                 text-decoration: underline;
+                text-underline-position: above;
+                text-underline-offset: 3px;
             }
         }
     `;
@@ -71,7 +75,7 @@ export default function NavBar() {
                 <NavLeftSide>
                     <NavLogo>
                         <Link to="/">
-                            Sol Market
+                            687B
                         </Link>
                     </NavLogo>
                 </NavLeftSide>
@@ -90,7 +94,13 @@ export default function NavBar() {
                         </NavItem>
 
                         <NavItem>
-                            <Link to='profile'>
+                            <Link to='/create'>
+                                Create
+                            </Link>
+                        </NavItem>
+
+                        <NavItem>
+                            <Link to='/profile'>
                                 Profile
                             </Link>
                         </NavItem>
