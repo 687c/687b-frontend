@@ -3,7 +3,6 @@ import React from 'react';
 const initialState = {
     walletAddress: null,
     walletConnected: false,
-    count: 0
 }
 
 // const walletContext = React.createContext(initialState);
@@ -17,9 +16,6 @@ function walletReducer(state, action) {
         case 'setWalletAddress': {
             return { ...state, walletAddress: action.data }
         }
-        case 'add': {
-            return { ...state, count: action.data }
-        }
         default: {
             // throw new Error(`Unhandled action type ${action.type}`)
             return { ...initialState }
@@ -27,7 +23,7 @@ function walletReducer(state, action) {
     }
 }
 
-function WalletProvider({ children }) {
+function WalletStore({ children }) {
     const [state, dispatch] = React.useReducer(walletReducer, initialState);
 
     const value = { state, dispatch };
@@ -47,5 +43,5 @@ function useWalletValues() {
     return context;
 }
 
-export { WalletProvider, useWalletValues }
+export { WalletStore, useWalletValues }
 
