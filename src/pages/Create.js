@@ -45,7 +45,7 @@ const ProductWrapper = styled.section`
         
         
         & > * {
-            border: 1px solid black;
+            /* border: 1px solid black; */
         }
     `
 
@@ -140,7 +140,7 @@ export default function Create() {
     const [selectedImage, setSelectedImage] = useState(null);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [price, setPrice] = useState(0);
+    const [price, setPrice] = useState("");
 
     //TODO 
     // ADD THE SELLER ADDRESS TO THE BODY WHEN CREATING A PRODUCT
@@ -171,12 +171,17 @@ export default function Create() {
 
         //this also wont sent if the sellerAddress is not defined
         const sellerAddress = state.walletAddress;
+        const numPrice = Number(price);
+
+        if (isNaN(numPrice)) {
+            alert("price not a number");
+        }
 
         const productFormData = new FormData();
         productFormData.append("imageFile", selectedImage);
         productFormData.append("title", title);
         productFormData.append("description", description);
-        productFormData.append("price", price);
+        productFormData.append("price", numPrice);
         productFormData.append("sellerAddress", sellerAddress);
 
         let res = await createProduct(productFormData);
@@ -194,7 +199,7 @@ export default function Create() {
     }
 
     // if wallet not connected
-    if( !state.walletConnected){
+    if (!state.walletConnected) {
         return <>Connect Your Wallet to create Products or an NFT</>
     }
 
@@ -270,7 +275,7 @@ export default function Create() {
                                             />
                                         </InputText>
                                         <InputText>
-                                            <input placeholder="price"
+                                            <input placeholder="price in USDC"
                                                 onChange={e => setPrice(e.target.value)}
                                                 value={price}
                                             />
