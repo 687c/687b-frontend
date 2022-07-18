@@ -1,9 +1,10 @@
-import { sendAndConfirmTransaction, Keypair, Connection, clusterApiUrl, Transaction } from "@solana/web3.js";
+import { Keypair, Connection, clusterApiUrl, Transaction } from "@solana/web3.js";
 import { useEffect, useMemo, useState } from "react";
 import styled from "styled-components"
 
 import { getAllProducts, testProductFail } from "../services/productService";
 import { buyProduct } from "../services/transactionService";
+import { useWalletValues } from "../store";
 
 import ProductCard from "../components/ProductCard";
 
@@ -22,8 +23,14 @@ export default function Marketplace() {
     const [products, setProducts] = useState();
     const [isLoading, setIsLoading] = useState(true);
 
+    const { state } = useWalletValues();
 
     const orderId = useMemo(() => Keypair.generate().publicKey, []);
+
+    //get the wallet address from the store
+    // useEffect(() => {
+    //     console.log("these are the store values -> ", state);
+    // }, [state]);
 
     useEffect(() => {
         // testProductFail().then(res => {
@@ -36,7 +43,7 @@ export default function Marketplace() {
 
         getAllProducts().then(res => {
             if (res.error) {
-                alert("error fetching all products -> ", res.data);
+                // alert("error fetching all products -> ");
                 return;
             }
 
@@ -82,10 +89,13 @@ export default function Marketplace() {
         }
     }
 
-
-
     //generating empty Products
     const prods = new Array(5).fill("");
+
+    //if wallet not connected
+    if( !state.walletConnected){
+        return <>Connect Your Wallet to view and buy product</>
+    }
 
     if (isLoading) {
         return <>Loading....</>
