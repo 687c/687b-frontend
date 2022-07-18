@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = '/api/v1/product/';
+const baseUrl = '/api/v1/product';
 
 export const getAllProducts = async () => {
     let resp = {

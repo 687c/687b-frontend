@@ -49,7 +49,7 @@ const Buy = styled.button`
 
 
 
-const ProductCard = ({ title, img, price }) => {
+const ProductCard = ({ title, ipfsHash, price, handleBuy }) => {
     //states
 
 
@@ -62,22 +62,26 @@ const ProductCard = ({ title, img, price }) => {
     return (
         <Wrapper>
             <ImgContainer>
-                IMAGE
+                <img
+                    src={`https://gateway.pinata.cloud/ipfs/${ipfsHash}`}
+                    height="180px"
+                    width="198px"
+                    alt="" />
             </ImgContainer>
 
             <ProductInfo>
                 <div>
                     <Title>
-                        Product One
+                        {title}
                     </Title>
                 </div>
                 <div>
                     <Price>
-                        23 USDC
+                        {price} USDC
                     </Price>
                 </div>
                 <div>
-                    <Buy>
+                    <Buy onClick={handleBuy}>
                         Buy Now
                     </Buy>
                 </div>

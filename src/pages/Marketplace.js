@@ -89,7 +89,7 @@ export default function Marketplace() {
     const prods = new Array(5).fill("");
 
     //if wallet not connected
-    if( !state.walletConnected){
+    if (!state.walletConnected) {
         return <>Connect Your Wallet to view and buy product</>
     }
 
@@ -106,7 +106,10 @@ export default function Marketplace() {
             <ProductsWrapper>
                 {
                     products.map(prod => (
-                        <ProductCard
+                        < ProductCard
+                            ipfsHash={prod.ipfsHash}
+                            price={prod.price}
+                            title={prod.title}
                             handleBuy={() => handleBuy(prod.id)}
                         />
                     ))
