@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 import { ConnectionBtn } from "../components/ConnectionBtn";
 import { useWalletValues } from "../store";
-import styled from "styled-components";
+// import styled from "styled-components";
 
 export default function About() {
 

@@ -27,11 +27,6 @@ export default function Marketplace() {
 
     const orderId = useMemo(() => Keypair.generate().publicKey, []);
 
-    //get the wallet address from the store
-    // useEffect(() => {
-    //     console.log("these are the store values -> ", state);
-    // }, [state]);
-
     useEffect(() => {
         // testProductFail().then(res => {
         //     if (res.error) {
@@ -63,7 +58,8 @@ export default function Marketplace() {
         let product = products.find(prod => prod.id === id);
         console.log("this is the product found", product);
 
-        const publicKey = "EX18BadxPGLjZjpCc6r38VPPYR4yd1764J915Q1WSVwE".toString(); //GET THIS FROM THE GLOBAL STORE
+        // const publicKey = "EX18BadxPGLjZjpCc6r38VPPYR4yd1764J915Q1WSVwE".toString(); //GET THIS FROM THE GLOBAL STORE
+        const publicKey = state.walletAddress.toString();
 
         let connection = new Connection(clusterApiUrl('devnet'));
 

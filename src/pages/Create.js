@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react"
 import { Navigate, NavLink, useLocation } from "react-router-dom"
 import styled from "styled-components"
 
+import { useWalletValues } from "../store";
+
 import { createProduct } from "../services/productService";
 
 //styles
@@ -131,6 +133,9 @@ const SubmitButton = styled(Button)`
 export default function Create() {
     const location = useLocation().pathname.split('/')[2];
 
+    //global state for the wallet values
+    const { state } = useWalletValues();
+
     //form management form
     const [selectedImage, setSelectedImage] = useState(null);
     const [title, setTitle] = useState("");
@@ -165,7 +170,7 @@ export default function Create() {
         }
 
         //this also wont sent if the sellerAddress is not defined
-        const sellerAddress = "EX18BadxPGLjZjpCc6r38VPPYR4yd1764J915Q1WSVwE";
+        const sellerAddress = state.walletAddress;
 
         const productFormData = new FormData();
         productFormData.append("imageFile", selectedImage);
@@ -188,6 +193,10 @@ export default function Create() {
         return;
     }
 
+    // if wallet not connected
+    if( !state.walletConnected){
+        return <>Connect Your Wallet to create Products or an NFT</>
+    }
 
 
     return (
