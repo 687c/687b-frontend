@@ -50,7 +50,9 @@ const CTABtn = styled.button`
     /* width: 110px; */
 
         &:hover{
+            background-color: black;
             border: 5.7px solid black;
+            color: white;
             cursor: pointer;
         }
 `;

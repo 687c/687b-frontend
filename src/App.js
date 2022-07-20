@@ -13,34 +13,40 @@ import Create from "./pages/Create";
 
 import './App.css';
 import { WalletStore } from "./store";
+import Footer from "./components/Footer";
 
 function App() {
 
 	return (
-		<div className="App">
+		// <div className="App">
+		<>
 			<WalletStore>
 				<BrowserRouter>
-					<header className="AppHeader">
-						<Nav />
-					</header>
+					<div className="App">
+						<header className="AppHeader">
+							<Nav />
+						</header>
 
-					<Routes>
-						<Route path="/" element={<Home />} />
-						<Route path="about" element={<About />} />
-						<Route path="marketplace" element={<Marketplace />} />
-						<Route path="create" element={<Create />} >
-							{/* <Route index element="product" /> */}
-							<Route index path="product" />
-							<Route path="nft" />
-						</Route>
+						<Routes>
+							<Route path="/" element={<Home />} />
+							<Route path="about" element={<About />} />
+							<Route path="marketplace" element={<Marketplace />} />
+							<Route path="create" element={<Create />} >
+								{/* <Route index element="product" /> */}
+								<Route index path="product" />
+								<Route path="nft" />
+							</Route>
 
-						<Route path="profile" element={<Profile />} />
-						<Route path="*" element={<>Nothing to see here</>} /> {/* 404 route matches nothing */}
-						{/* </Route> */}
-					</Routes>
+							<Route path="profile" element={<Profile />} />
+							<Route path="*" element={<>Nothing to see here</>} /> {/* 404 route matches nothing */}
+							{/* </Route> */}
+						</Routes>
+					</div>
+
+					<Footer />
 				</BrowserRouter>
 			</WalletStore>
-		</div>
+		</>
 	);
 }
 
