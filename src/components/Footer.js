@@ -8,7 +8,7 @@ const Wrapper = styled.footer`
     display: flex;
     justify-content: center;
     height: 100px;
-    position: fixed;
+    /* position: fixed; */
     width: 100vw;
 `;
 

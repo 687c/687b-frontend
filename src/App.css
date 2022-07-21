@@ -1,5 +1,6 @@
 .App {
-  margin: 0 2vw; 
+  margin: 0 2vw;
+  min-height: 90vh; 
 }
 
 
