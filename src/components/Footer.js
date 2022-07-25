@@ -9,7 +9,7 @@ const Wrapper = styled.footer`
     justify-content: center;
     height: 100px;
     /* position: fixed; */
-    width: 100vw;
+    /* width: 100vw; */
 `;
 
 
