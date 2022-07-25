@@ -302,7 +302,7 @@ export default function Create() {
                     location === "nft" && (
                         <section>
                             <div>
-                                we are in the nft component
+                                COMING SOON!
                             </div>
 
 
