@@ -20,3 +20,20 @@ export const buyProduct = async (id, buyerPublicKey, orderId) => {
 
     return resp;
 }
+
+export const confirmPurchase = async (id) => {
+    let resp = {
+        data: null,
+        error: false,
+    }
+
+    try {
+        const res = await axios.post(`${baseUrl}/confirmed`, { id });
+        resp.data = res.data;
+    } catch (err) {
+        resp.error = true;
+        resp.data = err.response.data.message; //the message from the server
+    }
+
+    return resp;
+}
