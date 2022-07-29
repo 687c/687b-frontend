@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import styled from "styled-components"
 
 import { getAllProducts, testProductFail } from "../services/productService";
-import { buyProduct } from "../services/transactionService";
+import { buyProduct, confirmPurchase } from "../services/transactionService";
 import { useWalletValues } from "../store";
 
 import ProductCard from "../components/ProductCard";
@@ -28,14 +28,6 @@ export default function Marketplace() {
     const orderId = useMemo(() => Keypair.generate().publicKey, []);
 
     useEffect(() => {
-        // testProductFail().then(res => {
-        //     if (res.error) {
-        //         return;
-        //     }
-        //     console.log("the res", res);
-        // });
-
-
         getAllProducts().then(res => {
             if (res.error) {
                 // alert("error fetching all products -> ");
@@ -75,7 +67,15 @@ export default function Marketplace() {
 
             const provider = window.solana;
             const { signature } = await provider.signAndSendTransaction(transaction);
-            await connection.getSignatureStatus(signature);
+            let res = await connection.getSignatureStatus(signature);
+            console.log("this is the sig res", res);
+
+            //setPaid on product if signature returns with value
+            if (res.context) {
+                let purchased = await confirmPurchase(id);
+                console.log("purchased", purchased);
+                return;
+            }
 
             // const txPair = Keypair.generate();
             // const signature = await sendAndConfirmTransaction(connection, transaction, [txPair]);
@@ -106,12 +106,12 @@ export default function Marketplace() {
             <ProductsWrapper>
                 {
                     products.map(prod => (
-                        < ProductCard
+                        !prod.paid && (< ProductCard key={prod.id} /* makes sure that only `paid:false` products are shown */
                             ipfsHash={prod.ipfsHash}
                             price={prod.price}
                             title={prod.title}
                             handleBuy={() => handleBuy(prod.id)}
-                        />
+                        />)
                     ))
                 }
             </ProductsWrapper>
