@@ -15,9 +15,11 @@ export default function About() {
 
     return (
         <div>
-            <p>You are in the about page</p>
+            {/* <p>You are in the about page</p> */}
             {/* <button onClick={connectWallet}>connect wallet</button> */}
-            <ConnectionBtn />
+            {/* <ConnectionBtn /> */}
+
+            An E-commerce site to post and buy products
 
         </div>
     )
