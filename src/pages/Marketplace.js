@@ -74,6 +74,7 @@ export default function Marketplace() {
             if (res.context) {
                 let purchased = await confirmPurchase(id);
                 console.log("purchased", purchased);
+                window.location.reload();
                 return;
             }
 
@@ -106,12 +107,13 @@ export default function Marketplace() {
             <ProductsWrapper>
                 {
                     products.map(prod => (
-                        !prod.paid && (< ProductCard key={prod.id} /* makes sure that only `paid:false` products are shown */
-                            ipfsHash={prod.ipfsHash}
-                            price={prod.price}
-                            title={prod.title}
-                            handleBuy={() => handleBuy(prod.id)}
-                        />)
+                        !prod.paid && ( /* makes sure that only `paid:false` products are shown */
+                            < ProductCard key={prod.id}
+                                ipfsHash={prod.ipfsHash}
+                                price={prod.price}
+                                title={prod.title}
+                                handleBuy={() => handleBuy(prod.id)}
+                            />)
                     ))
                 }
             </ProductsWrapper>
