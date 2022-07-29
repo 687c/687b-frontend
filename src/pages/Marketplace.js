@@ -74,7 +74,8 @@ export default function Marketplace() {
             if (res.context) {
                 let purchased = await confirmPurchase(id);
                 console.log("purchased", purchased);
-                window.location.reload();
+                console.log('these are the products in the state', products);
+                getAllProducts().then(res => { setProducts(res.data) }); //update state here
                 return;
             }
 
@@ -107,7 +108,15 @@ export default function Marketplace() {
             <ProductsWrapper>
                 {
                     products.map(prod => (
-                        !prod.paid && ( /* makes sure that only `paid:false` products are shown */
+                        /* 
+                        * Currently this is wasteful as we are getting all products from the backend
+                        * and filtering by paid on the frontend to see which ones haven't been purchased
+                        * 
+                        * As data grows it would be more efficient to have two API's
+                        * One which returns all items whether purchased or not
+                        * Two which returns all non-purchased items and we could use that in the marketplace
+                        */
+                        !prod.paid && (
                             < ProductCard key={prod.id}
                                 ipfsHash={prod.ipfsHash}
                                 price={prod.price}
