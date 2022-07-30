@@ -22,6 +22,7 @@ const ProductsWrapper = styled.section`
 export default function Marketplace() {
     const [products, setProducts] = useState();
     const [isLoading, setIsLoading] = useState(true);
+    const [paid, setPaid] = useState(false);
 
     const { state } = useWalletValues();
 
@@ -41,16 +42,13 @@ export default function Marketplace() {
             setIsLoading(false);
         });
 
-    }, []);
+    }, [paid]);
 
-
-    //function to handle buying of the product.
-    //maybe it should be on its own
+    //purchase of items
     const handleBuy = async (id) => {
-        let product = products.find(prod => prod.id === id);
-        console.log("this is the product found", product);
+        // let product = products.find(prod => prod.id === id);
+        // console.log("this is the product found", product);
 
-        // const publicKey = "EX18BadxPGLjZjpCc6r38VPPYR4yd1764J915Q1WSVwE".toString(); //GET THIS FROM THE GLOBAL STORE
         const publicKey = state.walletAddress.toString();
 
         let connection = new Connection(clusterApiUrl('devnet'));
@@ -68,20 +66,14 @@ export default function Marketplace() {
             const provider = window.solana;
             const { signature } = await provider.signAndSendTransaction(transaction);
             let res = await connection.getSignatureStatus(signature);
-            console.log("this is the sig res", res);
 
             //setPaid on product if signature returns with value
             if (res.context) {
                 let purchased = await confirmPurchase(id);
                 console.log("purchased", purchased);
-                console.log('these are the products in the state', products);
-                getAllProducts().then(res => { setProducts(res.data) }); //update state here
+                setPaid(!paid); //Un-list purchased product
                 return;
             }
-
-            // const txPair = Keypair.generate();
-            // const signature = await sendAndConfirmTransaction(connection, transaction, [txPair]);
-            // console.log("this is the signature resp", signature);
         } catch (err) {
             console.error('error sending the transaction', err);
         }
