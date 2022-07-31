@@ -5,10 +5,13 @@ import styled from "styled-components";
 export default function NavBar() {
 
     const Wrapper = styled.div`
+        min-width: 93vw; 
         padding: 3vh 0;
+        position: fixed;
     `;
 
     const NavContainer = styled.div`
+        background: white;
 	    border: 2px solid black;
         display: flex;
         font-weight: 900;

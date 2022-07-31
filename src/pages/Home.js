@@ -5,7 +5,7 @@ const Wrapper = styled.div`
     //
 `;
 
-const Header = styled.header`
+const Header = styled.div`
     display: flex;
     flex-direction: column;
 `;

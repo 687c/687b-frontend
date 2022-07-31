@@ -14,6 +14,11 @@ import Create from "./pages/Create";
 import './App.css';
 import { WalletStore } from "./store";
 import Footer from "./components/Footer";
+import styled from "styled-components";
+
+const Main = styled.main`
+	padding-top: 15vh ;
+`;
 
 function App() {
 
@@ -27,20 +32,22 @@ function App() {
 							<Nav />
 						</header>
 
-						<Routes>
-							<Route path="/" element={<Home />} />
-							<Route path="about" element={<About />} />
-							<Route path="marketplace" element={<Marketplace />} />
-							<Route path="create" element={<Create />} >
-								{/* <Route index element="product" /> */}
-								<Route index path="product" />
-								<Route path="nft" />
-							</Route>
+						<Main>
+							<Routes>
+								<Route path="/" element={<Home />} />
+								<Route path="about" element={<About />} />
+								<Route path="marketplace" element={<Marketplace />} />
+								<Route path="create" element={<Create />} >
+									{/* <Route index element="product" /> */}
+									<Route index path="product" />
+									<Route path="nft" />
+								</Route>
 
-							<Route path="profile" element={<Profile />} />
-							<Route path="*" element={<>Nothing to see here</>} /> {/* 404 route matches nothing */}
-							{/* </Route> */}
-						</Routes>
+								<Route path="profile" element={<Profile />} />
+								<Route path="*" element={<>Nothing to see here</>} /> {/* 404 route matches nothing */}
+								{/* </Route> */}
+							</Routes>
+						</Main>
 					</div>
 
 					<Footer />
