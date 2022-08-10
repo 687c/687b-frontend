@@ -53,8 +53,6 @@ const CTABtn = styled.button`
 `;
 
 
-
-
 export default function Home() {
     /* Welcome to 687b. The first African E-commerce platform where folks can post and buy 
     product from each other build on the blockchain
@@ -96,8 +94,7 @@ export default function Home() {
         }
     }
 
-    console.log("state", state);
-
+    // console.log("state", state);
 
     return (
         <Wrapper>

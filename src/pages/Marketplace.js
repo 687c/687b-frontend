@@ -35,7 +35,6 @@ export default function Marketplace() {
                 return;
             }
 
-            console.log("this is the res", res);
             setProducts(res.data);
 
             //check for an error and use it to change the loading state
@@ -61,7 +60,6 @@ export default function Marketplace() {
             }
 
             const transaction = Transaction.from(Buffer.from(resp.data.transaction, "base64"));
-            console.log("tx data is -> ", transaction);
 
             const provider = window.solana;
             const { signature } = await provider.signAndSendTransaction(transaction);
@@ -69,8 +67,7 @@ export default function Marketplace() {
 
             //setPaid on product if signature returns with value
             if (res.context) {
-                let purchased = await confirmPurchase(id);
-                console.log("purchased", purchased);
+                await confirmPurchase(id);
                 setPaid(!paid); //Un-list purchased product
                 return;
             }
