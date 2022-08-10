@@ -34,11 +34,6 @@ const CTASection = styled.section`
     justify-content: center;
 `;
 
-const CTAText = styled.p`
-    font-size: 23px;
-    text-align: center;
-`
-
 const CTABtn = styled.button`
     background: none;
     border: 1.9px solid black;
@@ -61,8 +56,6 @@ const CTABtn = styled.button`
 
 
 export default function Home() {
-    console.log('this is the window location', window.location);
-
     /* Welcome to 687b. The first African E-commerce platform where folks can post and buy 
     product from each other build on the blockchain
 
@@ -109,25 +102,17 @@ export default function Home() {
     return (
         <Wrapper>
             <Header>
-                {/* <div> */}
                 <WelcomeText>
                     Welcome to 687b
                 </WelcomeText>
-                {/* </div> */}
-                {/* <div> */}
                 <SubText>
                     The first African E-commerce platform where folks can post and buy
                     product from each other build on the blockchain.
                 </SubText>
-                {/* </div> */}
             </Header>
 
             <Main>
                 <CTASection>
-                    {/* <CTAText>
-                        To get started connect your wallet below.
-                    </CTAText> */}
-
                     <CTABtn onClick={state.walletConnected ? disconnectWallet : connectWallet}>
                         {state.walletConnected ? "Disconnect Wallet" : "Connect Wallet"}
                     </CTABtn>
