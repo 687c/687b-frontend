@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { Navigate, NavLink, useLocation } from "react-router-dom"
 import styled from "styled-components"
+import toast, { Toaster } from 'react-hot-toast';
 
 import { useWalletValues } from "../store";
 
@@ -72,10 +73,6 @@ const ImgContainer = styled.div`
         width: 300px;
     `;
 
-const ImgInput = styled.input`
-        margin: auto;
-    `;
-
 const ImagePreview = styled.img`
         height: 200px;
         position: relative;
@@ -142,19 +139,17 @@ export default function Create() {
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState("");
 
-    //TODO 
-    // ADD THE SELLER ADDRESS TO THE BODY WHEN CREATING A PRODUCT
-    // !!! MAKE SURE TO CONVERT IT TO A STRING !!!!!
 
     //input click function
     const inputRef = useRef();
     const handleImageUpload = () => {
-        const res = inputRef.current.click();
+        inputRef.current.click();
     };
 
-    // useEffect(() => {
-    //     console.log("the selected file", selectedImage);
-    // }, [selectedImage]);
+    //show loading
+    const notifyLoading = () => {
+        toast.loading("saving product...");
+    }
 
 
     //submitting the form
@@ -163,9 +158,7 @@ export default function Create() {
 
         //title, image cannot be empty
         if (title === "") {
-            //TODO
-            //NOTIFY user that he cannot submit an empty form
-            console.log("this", selectedImage);
+            toast.error("please enter product title");
             return;
         }
 
@@ -174,7 +167,8 @@ export default function Create() {
         const numPrice = Number(price);
 
         if (isNaN(numPrice)) {
-            alert("price not a number");
+            toast.error("price must be a number");
+            return;
         }
 
         const productFormData = new FormData();
@@ -185,10 +179,10 @@ export default function Create() {
         productFormData.append("sellerAddress", sellerAddress);
 
         let res = await createProduct(productFormData);
-        console.log("the created product ->", res);
-
-        // if (selectedFile)
-        console.log("submit btn called");
+        toast.dismiss();
+        console.log('calling this');
+        res.error ? toast.error("error creating the product") : toast.success("Product Saved");
+        console.log("the res", res);
 
         //clear the state
         setSelectedImage(null);
@@ -206,6 +200,7 @@ export default function Create() {
 
     return (
         <Wrapper>
+            <Toaster />
             <NavWrapper>
                 <MiniNav>
                     <NavItem>
@@ -239,7 +234,6 @@ export default function Create() {
                                             selectedImage === null ?
                                                 (
                                                     <div>
-                                                        {/* <button onClick={handleImageUpload}>click me</button> */}
                                                         <Button onClick={handleImageUpload}>Upload Image</Button>
                                                         <input ref={inputRef} type='file'
                                                             accept="image/*" style={{ display: "none" }}
@@ -260,7 +254,6 @@ export default function Create() {
                                     </ImgContainer>
 
                                     <div>
-                                        {/*this is where we will have name and such  */}
                                         <InputText>
                                             <input placeholder="title"
                                                 value={title}
@@ -284,7 +277,7 @@ export default function Create() {
                                 </InputWrapper>
 
                                 <SubmitContainer>
-                                    <SubmitButton onClick={handleFormSubmit}>
+                                    <SubmitButton onClick={(event) => { notifyLoading(); handleFormSubmit(event) }} >
                                         submit
                                     </SubmitButton>
                                 </SubmitContainer>
@@ -294,10 +287,7 @@ export default function Create() {
                     )
                 }
 
-                {/* We should only display the create if the wallet is connected 
-                    if not when the user clicks here, We should display a modal
-                    to tell the user to connect wallet
-                */}
+                {/* NFT SECTION */}
                 {
                     location === "nft" && (
                         <section>
@@ -315,6 +305,6 @@ export default function Create() {
                     )
                 }
             </main>
-        </Wrapper>
+        </Wrapper >
     )
 }
