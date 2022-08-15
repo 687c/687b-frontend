@@ -71,12 +71,20 @@ const ImgContainer = styled.div`
         overflow: hidden;
         padding: 50px 0;    
         width: 300px;
+
+        @media (max-width: 910px) {
+            width: 40vw;
+        }
     `;
 
 const ImagePreview = styled.img`
         height: 200px;
         position: relative;
         width: 300px;
+
+        @media (max-width: 400px) {
+            width: 40vw;
+        }
     `;
 
 const InputText = styled.div`      
