@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useWalletValues } from "../store";
+import toast, { Toaster } from 'react-hot-toast';
 
 const Wrapper = styled.div`
     //
@@ -68,6 +69,7 @@ export default function Home() {
                 if (solana.isPhantom) {
                     const resp = await solana.connect()
                     console.log("connected to phantom wallet solana");
+                    toast("wallet connected");
 
                     dispatch({ type: 'setWalletAddress', data: resp.publicKey.toString() });
                     dispatch({ type: 'setWalletConnected', data: true });
@@ -88,6 +90,7 @@ export default function Home() {
             const { solana } = window;
             const resp = await solana.disconnect();
             dispatch({ type: 'default' });
+            toast("wallet disconnected");
             console.log("disconnecting response", resp);
         } catch (err) {
             console.error("error disconnecting from solana");
@@ -98,6 +101,7 @@ export default function Home() {
 
     return (
         <Wrapper>
+            <Toaster />
             <Header>
                 <WelcomeText>
                     Welcome to 687b
