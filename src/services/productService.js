@@ -26,11 +26,11 @@ export const createProduct = async (createdProduct) => {
     }
 
     try {
-        const res = await await axios.post(`${baseUrl}/create`, createdProduct, {
+        const res = await axios.post(`${baseUrl}/create`, createdProduct, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             },
-            
+
         });
         resp.data = res.data;
     } catch (err) {
