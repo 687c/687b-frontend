@@ -23,7 +23,6 @@ const Main = styled.main`
 function App() {
 
 	return (
-		// <div className="App">
 		<>
 			<WalletStore>
 				<BrowserRouter>
@@ -38,14 +37,12 @@ function App() {
 								<Route path="about" element={<About />} />
 								<Route path="marketplace" element={<Marketplace />} />
 								<Route path="create" element={<Create />} >
-									{/* <Route index element="product" /> */}
 									<Route index path="product" />
 									<Route path="nft" />
 								</Route>
 
 								<Route path="profile" element={<Profile />} />
-								<Route path="*" element={<>Nothing to see here</>} /> {/* 404 route matches nothing */}
-								{/* </Route> */}
+								<Route path="*" element={<>Nothing to see here</>} />
 							</Routes>
 						</Main>
 					</div>
